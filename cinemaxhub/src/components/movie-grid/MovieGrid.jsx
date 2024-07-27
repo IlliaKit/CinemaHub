@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-
-import "./movie-grid.scss";
-
-import MovieCard from "../movie-card/MovieCard";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import "./movie-grid.scss";
+import MovieCard from "../movie-card/MovieCard";
 import tmdbApi, { movieType, tvType, category } from "../../api/tmdbApi";
-import { OutlineButton } from "../button/Button";
+import Button, { OutlineButton } from "../button/Button";
 
+import Input from "../input/Input";
 const MovieGrid = (props) => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
@@ -69,6 +69,10 @@ const loadMore = async () =>{
 
   return (
     <>
+
+        <div className="section mb-3">
+            <MovieSearch category={props.category} keyword={keyword}/>
+        </div>
       <div className="movie-grid">
         {items.map((item, i) => (
           <MovieCard category={props.category} item={item} key={i} />
@@ -86,6 +90,40 @@ const loadMore = async () =>{
   );
 };
 
+const MovieSearch = (props) => {
+    const navigate = useNavigate();
+    const [keyword, setKeyword] = useState(props.keyword ? props.keyword : '');
+  
+    const goToSearch = useCallback(() => {
+      if (keyword.trim().length > 0) {
+        navigate(`/${category[props.category]}/search/${keyword}`);
+      }
+    }, [keyword,props.category, navigate]);
+  
+    useEffect(() => {
+      const enterEvent = (e) => {
+        e.preventDefault();
+        if (e.keyCode === 13) {
+          goToSearch();
+        }
+      };
+      document.addEventListener('keyup', enterEvent);
+      return () => {
+        document.removeEventListener('keyup', enterEvent);
+      };
+    }, [keyword, goToSearch, ]);
+  
+    return (
+      <div className="movie-search">
+        <Input
+          type="text"
+          placeholder="Enter keyword"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+        />
 
-
+        <Button className="small" onClick={goToSearch}>Search</Button>
+      </div>
+    );
+  };
 export default MovieGrid;
