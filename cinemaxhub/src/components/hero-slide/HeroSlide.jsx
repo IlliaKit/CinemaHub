@@ -89,6 +89,9 @@ const HeroSlideItem = (props) => {
       style={{ backgroundImage: `url(${background})` }}
     >
       <div className="hero-slide__item__content container">
+      <div className="hero-slide__item__content__poster">
+          <img src={apiConfig.w500Image(item.poster_path)} alt="" />
+        </div>
         <div className="hero-slide__item__content__info">
           <h2 className="title">{item.title}</h2>
           <div className="overview">{item.overview}</div>
@@ -101,9 +104,7 @@ const HeroSlideItem = (props) => {
             </OutlineButton>
           </div>
         </div>
-        <div className="hero-slide__item__content__poster">
-          <img src={apiConfig.w500Image(item.poster_path)} alt="" />
-        </div>
+       
       </div>
     </div>
   );

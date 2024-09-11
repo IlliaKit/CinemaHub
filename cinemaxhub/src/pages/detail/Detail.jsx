@@ -51,7 +51,7 @@ const Detail = () => {
                                     <div className="section__header">
                                         <h2>Casts</h2>
                                     </div>
-                                    <CastList id={item.id}/>
+                                   <CastList id={item.id}/>
                                 </div>
                             </div>
                         </div>

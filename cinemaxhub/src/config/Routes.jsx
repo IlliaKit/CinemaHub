@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Catalog from '../pages/Catalog';
 import Detail from '../pages/detail/Detail';
+import TicketBooking from '../pages/TicketBooking';
+
 
 const AppRoutes = () => {
     return (
@@ -20,10 +22,15 @@ const AppRoutes = () => {
                 path='/:category'
                 element={<Catalog />}
             />
+               <Route
+                path='/ticket' 
+                element={<TicketBooking />}
+            />
             <Route
                 path='/'
                 element={<Home />}
             />
+             
         </Routes>
     );
 }
